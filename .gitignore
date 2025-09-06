@@ -1,0 +1,6 @@
+# Ignore environment variable files
+.env
+
+# Add any other secret or config files here
+secret_config.json
+config/*.key
