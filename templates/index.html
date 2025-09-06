@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching AI Validator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <span>Teaching AI</span>
+                    <span class="badge">Free</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-item active">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>AI Validator</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-btn" id="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </button>
+                </div>
+                <div class="header-right">
+                    <div class="header-stats">
+                        <span class="stat">
+                            <i class="fas fa-fire"></i>
+                            <span id="user-score">0</span>
+                        </span>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area" id="main-view">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen">
+                    <div class="welcome-header">
+                        <h1>Hey, Teacher!</h1>
+                        <p>What would you like to teach the AI today?</p>
+                    </div>
+
+                    <!-- Topic Input - NO DROPDOWN -->
+                    <div class="topic-input-section">
+                        <div class="input-container">
+                            <div class="topic-input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="topic-input" 
+                                    placeholder="Enter the topic you want to teach..."
+                                    maxlength="100"
+                                >
+                                <button id="start-teaching-btn" class="start-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Start Cards -->
+                    <div class="quick-start-cards">
+                        <div class="quick-card" data-topic="photosynthesis">
+                            <div class="card-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Science Teaching</h3>
+                                <p>Teach complex scientific processes like photosynthesis</p>
+                            </div>
+                        </div>
+                        <div class="quick-card" data-topic="chess">
+                            <div class="card-icon">
+                                <i class="fas fa-chess"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Game Teaching</h3>
+                                <p>Explain game rules and strategies</p>
+                            </div>
+                        </div>
+                        <div class="quick-card" data-topic="programming">
+                            <div class="card-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Skill Teaching</h3>
+                                <p>Teach practical skills and techniques</p>
+                            </div>
+                        </div>
+                        <div class="quick-card" data-topic="world war 2">
+                            <div class="card-icon">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>History Teaching</h3>
+                                <p>Explain historical events and contexts</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Topics -->
+                    <div class="sample-topics">
+                        <div class="section-header">
+                            <h3>Sample Teaching Topics</h3>
+                        </div>
+                        <div class="topic-suggestions">
+                            <div class="topic-item" data-topic="how democracy works">
+                                <span>How democracy works</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="topic-item" data-topic="cooking pasta">
+                                <span>Perfect pasta cooking technique</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="topic-item" data-topic="guitar basics">
+                                <span>Guitar basics for beginners</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Session View (Hidden by default) -->
+            <div class="teaching-session" id="teaching-session" style="display: none;">
+                <!-- Session Header -->
+                <div class="session-header">
+                    <div class="session-info">
+                        <h2>Teaching Session</h2>
+                        <div class="session-details">
+                            <span class="topic-badge">Topic: <span id="current-topic"></span></span>
+                            <div class="session-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-star"></i>
+                                    Quality: <span id="teaching-quality">0.00</span>
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-brain"></i>
+                                    AI Level: <span id="ai-level">1</span>
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-comments"></i>
+                                    Exchanges: <span id="exchanges-count">0</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="session-controls">
+                        <button id="reset-session-btn" class="control-btn">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                        <button id="new-topic-btn" class="control-btn primary">
+                            <i class="fas fa-plus"></i>
+                            New Topic
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Messages will be added here -->
+                    </div>
+                    
+                    <!-- Teaching Input -->
+                    <div class="teaching-input-section">
+                        <div class="input-wrapper">
+                            <textarea 
+                                id="teaching-input" 
+                                placeholder="Explain the concept to the AI student..."
+                                rows="3"
+                                maxlength="1000"
+                            ></textarea>
+                            <div class="input-footer">
+                                <div class="char-counter">
+                                    <span id="char-count">0</span>/1000 characters
+                                </div>
+                                <button id="send-explanation-btn" class="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Explanation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>AI is thinking...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
